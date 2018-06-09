@@ -1,2 +1,1 @@
-<manifest package="com.allsouls.reduxkt"
-          xmlns:android="http://schemas.android.com/apk/res/android"/>
+<manifest package="com.allsouls.redux"/>

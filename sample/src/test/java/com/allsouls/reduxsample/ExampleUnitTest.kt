@@ -1,4 +1,4 @@
-package com.allsouls.reduxkt
+package com.allsouls.reduxsample
 
 import org.junit.Test
 

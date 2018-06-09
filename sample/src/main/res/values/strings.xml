@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">redux-kt</string>
+    <string name="app_name">ReduxKt Sample</string>
+    <string name="decrement_button_text">-</string>
+    <string name="increment_button_text">+</string>
+    <string name="reset_button_text">RESET</string>
+    <string name="count_text_prefix">Count: %d</string>
 </resources>

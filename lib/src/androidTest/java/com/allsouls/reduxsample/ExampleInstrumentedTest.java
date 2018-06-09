@@ -1,4 +1,4 @@
-package com.allsouls.reduxkt;
+package com.allsouls.reduxsample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
