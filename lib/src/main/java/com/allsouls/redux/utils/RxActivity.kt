@@ -6,8 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
- * Reactive wrapper for AppCompatActivity that exposes
- * a stream of Activity lifecycle events.
+ * Reactive wrapper for AppCompatActivity that exposes a stream of Activity lifecycle events.
  *
  * Inspired by RxLifecycle - https://github.com/zhihu/RxLifecycle/
  * Lifecycle events are hijacked by attaching a fragment to the Activity.
