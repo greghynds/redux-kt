@@ -1,6 +1,9 @@
 package com.allsouls.redux
 
 /**
+ * From the reduxjs docs:
+ * Actions are payloads of information that send data from your application to your store.
+ *
  * Based on Flux Standard Action - https://github.com/redux-utilities/flux-standard-action
  */
 data class Action(

@@ -4,8 +4,19 @@ import com.allsouls.redux.utils.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
+/**
+ * A wrapper to allow typing.
+ */
 internal class Redux<State> {
 
+    /**
+     * From the reduxjs docs:
+     * Creates a Redux store that holds the state tree.
+     * The only way to change the data in the store is to call `dispatch()` on it.
+     *
+     * @returns A Redux store that lets you read the state, dispatch actions
+     * and subscribe to changes.
+     */
     val createStore: (Reducer<State>, State, StoreEnhancer<State>?) -> Store<State>
         get() = { reducer, initialState, enhancer ->
             var currentState = initialState
@@ -35,6 +46,14 @@ internal class Redux<State> {
             }
         }
 
+    /**
+     * From the reduxjs docs:
+     * Creates a store enhancer that applies middleware to the dispatch method
+     * of the Redux store. This is handy for a variety of tasks, such as expressing
+     * asynchronous actions in a concise manner, or logging every action payload.
+     *
+     * @returns A store enhancer applying the middleware.
+     */
     val applyMiddleware: (List<Middleware<State>>) -> StoreEnhancer<State>
         get() = { middlewares ->
             { next ->
