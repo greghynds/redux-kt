@@ -1,6 +1,6 @@
 package com.allsouls.reduxsample.counter
 
-import com.allsouls.redux.Reducer
+import com.allsouls.redux.utils.Reducer
 
 val counterReducer: Reducer<Int> = { state, action ->
     when {
