@@ -1,7 +1,59 @@
 package com.allsouls.redux
 
+import android.support.v7.app.AppCompatActivity
+import com.allsouls.redux.utils.RxActivity
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+
+/**
+ * From the reduxjs docs:
+ * Reducers specify how the application's state changes in response to actions sent to the store.
+ */
+typealias Reducer<State> = (State, Action) -> State
+
+/**
+ * From the reduxjs docs:
+ * A store creator is a function that creates a Redux store.
+ */
+typealias StoreCreator<State> = (reducer: Reducer<State>, preloadedState: State) -> Store<State>
+
+/**
+ * From the reduxjs docs:
+ * A store enhancer is a higher-order function that composes a store creator to return a new, enhanced store creator.
+ */
+typealias StoreEnhancer<State> = (next: StoreCreator<State>) -> StoreCreator<State>
+
+/**
+ * From the reduxjs docs:
+ * A middleware is a higher-order function that composes a dispatch function to return a new dispatch function.
+ */
+typealias Middleware<State> = (Store<State>) -> ((Action) -> Action)
+
+
+/**
+ * From the reduxjs docs:
+ * Actions are payloads of information that send data from your application to your store.
+ *
+ * Based on Flux Standard Action - https://github.com/redux-utilities/flux-standard-action
+ */
+data class Action(
+        val type: String = "",
+        val payload: Any? = null,
+        val error: Boolean = false
+) {
+    fun ofType(vararg type: String): Boolean = type.contains(this.type)
+}
+
+/**
+ * From the reduxjs docs:
+ * A Redux store that lets you read the state, dispatch actions and subscribe to changes.
+ */
+interface Store<State> {
+    val dispatch: (Action) -> Action
+    val state: State
+    val updates: Observable<State>
+}
+
 
 /**
  * A wrapper to allow typing.
@@ -83,3 +135,32 @@ internal class Redux<State> {
             }
         }
 }
+
+
+/**
+ * Connects an AppCompatActivity to updates from the store and unsubscribes when the activity is destroyed.
+ * Call this in the AppCompatActivity.onCreate() method.
+ */
+fun <S> AppCompatActivity.connect(store: Store<S>): Observable<S> =
+        with(RxActivity.lifecycle(this)) {
+            filter { lifecycleEvent -> lifecycleEvent == RxActivity.ON_START }
+                    .takeUntil(filter { lifecycleEvent -> lifecycleEvent == RxActivity.ON_DESTROY })
+                    .concatMap { store.updates }
+        }
+
+/**
+ * See Redux.createStore()
+ */
+fun <State> createStore(reducer: Reducer<State>, initialState: State, vararg middlewares: Middleware<State>): Store<State> =
+        with(Redux<State>()) { createStore(reducer, initialState, applyMiddleware(middlewares.asList())) }
+
+/**
+ * See Redux.createStore()
+ */
+fun <State> createStore(reducer: Reducer<State>, initialState: State, enhancer: StoreEnhancer<State>? = null): Store<State> =
+        with(Redux<State>()) { createStore(reducer, initialState, enhancer) }
+
+/**
+ * Borrowed from https://github.com/MarioAriasC/funKTionale
+ */
+fun <IP, R, P1> ((IP) -> R).compose(f: (P1) -> IP): (P1) -> R = { p1: P1 -> this(f(p1)) }
