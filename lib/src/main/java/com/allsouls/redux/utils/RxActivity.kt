@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject
  * Inspired by RxLifecycle - https://github.com/zhihu/RxLifecycle/
  * Lifecycle events are hijacked by attaching a fragment to the Activity.
  */
-class RxActivity private constructor(val lifecycleStream: Observable<Int>) {
+internal class RxActivity private constructor(val lifecycleStream: Observable<Int>) {
 
     companion object {
         const val ON_ATTACH = 0

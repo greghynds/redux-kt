@@ -1,13 +1,8 @@
 package com.allsouls.redux
 
+import com.allsouls.redux.utils.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-
-typealias Reducer<State> = (State, Action) -> State
-typealias StoreCreator<State> = (reducer: Reducer<State>, preloadedState: State) -> Store<State>
-typealias StoreEnhancer<State> = (next: StoreCreator<State>) -> StoreCreator<State>
-typealias Selector<State, Slice> = (State) -> Slice
-typealias Middleware<State> = (Store<State>) -> ((Action) -> Action)
 
 internal class Redux<State> {
 
@@ -69,8 +64,4 @@ internal class Redux<State> {
                 creator
             }
         }
-
-    private fun <IP, R, P1> ((IP) -> R).compose(f: (P1) -> IP): (P1) -> R {
-        return { p1: P1 -> this(f(p1)) }
-    }
 }
