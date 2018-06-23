@@ -1,6 +1,5 @@
 package com.allsouls.redux
 
-import com.allsouls.redux.utils.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 

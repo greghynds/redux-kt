@@ -1,9 +1,5 @@
 package com.allsouls.redux
 
-import com.allsouls.redux.utils.Middleware
-import com.allsouls.redux.utils.Reducer
-import com.allsouls.redux.utils.StoreEnhancer
-
 /**
  * See Redux.createStore()
  */

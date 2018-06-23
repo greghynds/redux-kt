@@ -1,7 +1,4 @@
-package com.allsouls.redux.utils
-
-import com.allsouls.redux.Action
-import com.allsouls.redux.Store
+package com.allsouls.redux
 
 /**
  * From the reduxjs docs:

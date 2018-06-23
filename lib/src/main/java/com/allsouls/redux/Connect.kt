@@ -1,7 +1,7 @@
-package com.allsouls.redux.utils
+package com.allsouls.redux
 
 import android.support.v7.app.AppCompatActivity
-import com.allsouls.redux.Store
+import com.allsouls.redux.utils.RxActivity
 import io.reactivex.Observable
 
 /**

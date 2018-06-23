@@ -1,4 +1,4 @@
-package com.allsouls.redux.utils
+package com.allsouls.redux
 
 
 /**
