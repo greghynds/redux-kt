@@ -40,6 +40,10 @@ data class Action(
         val error: Boolean = false
 ) {
     fun ofType(vararg type: String): Boolean = type.contains(this.type)
+
+    companion object {
+        val EMPTY = Action("NONE")
+    }
 }
 
 /**
