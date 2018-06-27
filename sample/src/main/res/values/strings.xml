@@ -4,4 +4,6 @@
     <string name="increment_button_text">+</string>
     <string name="reset_button_text">RESET</string>
     <string name="count_text_prefix">Count: %d</string>
+    <string name="add_todo_entry_hint">Write a new TODO...</string>
+    <string name="add_button">ADD</string>
 </resources>

@@ -17,3 +17,15 @@ fun <S> AppCompatActivity.connect(store: Store<S>, update: (S) -> Unit, error: (
                     .concatMap { store.updates }
                     .subscribe(update, error)
         }
+
+fun <K, V> Map<K, V>.mutate(mutate: (MutableMap<K, V>) -> Unit): Map<K, V> =
+        toMutableMap().apply { mutate(this) }.toMap()
+
+fun <T> List<T>.mutate(mutate: (MutableList<T>) -> Unit): List<T> =
+        toMutableList().apply { mutate(this) }.toList()
+
+fun <T> List<T>.copyWith(element: T): List<T> =
+        mutate { list -> list.add(0, element) }
+
+fun <T> List<T>.copyWithout(element: T): List<T> =
+        mutate { list -> list.remove(element) }

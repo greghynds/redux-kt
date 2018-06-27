@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.allsouls.redux.createStore
 import com.allsouls.redux.utils.connect
 import com.allsouls.reduxsample.R
-import kotlinx.android.synthetic.main.activity_sample.*
+import kotlinx.android.synthetic.main.activity_counter.*
 
 class CounterActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class CounterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
+        setContentView(R.layout.activity_counter)
 
         // bind actions
         increment_button.setOnClickListener { store.dispatch(createIncrementAction()) }
@@ -22,7 +22,7 @@ class CounterActivity : AppCompatActivity() {
         reset_button.setOnClickListener { store.dispatch(createResetAction()) }
 
         // subscribe to updates from the store
-        connect(store, update = { state ->
+        connect(store, { state ->
             count_text.text = getString(R.string.count_text_prefix, state)
         })
     }
