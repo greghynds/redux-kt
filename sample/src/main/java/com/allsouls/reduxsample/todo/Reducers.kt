@@ -11,10 +11,15 @@ val todoReducer: Reducer<TodoActivity.TodoState> = { state, action ->
 
 val todosReducer: Reducer<List<TodoActivity.Todo>> = { state, action ->
     when {
-        action.ofType(ADD_TODO) -> state.mutate { list -> list.add(TodoActivity.Todo(action.payload as String, false)) }
-        action.ofType(CHECK_TODO) -> {
-            val index = action.payload as Int
-            if (index >= 0 && index < state.size) state.mutate { list -> list[index] } else state
+        action.ofType(ADD_TODO) -> state.mutate { list -> list.add(action.payload as TodoActivity.Todo) }
+        action.ofType(TOGGLE_TODO) -> {
+            val match = state.find { todo -> todo.id == action.payload as Int }
+            state.mutate { list ->
+                if (match != null) {
+                    val index = list.indexOf(match)
+                    list[index] = list[index].copy(checked = !list[index].checked)
+                }
+            }
         }
         else -> state
     }
