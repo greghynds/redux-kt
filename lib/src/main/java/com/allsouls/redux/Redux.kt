@@ -1,5 +1,6 @@
 package com.allsouls.redux
 
+import android.annotation.SuppressLint
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -30,24 +31,6 @@ typealias Middleware<State> = (Store<State>) -> ((Action) -> Action)
 
 /**
  * From the reduxjs docs:
- * Actions are payloads of information that send data from your application to your store.
- *
- * Based on Flux Standard Action - https://github.com/redux-utilities/flux-standard-action
- */
-data class Action(
-        val type: String = "",
-        val payload: Any? = null,
-        val error: Boolean = false
-) {
-    fun ofType(vararg type: String): Boolean = type.contains(this.type)
-
-    companion object {
-        val EMPTY = Action("NONE")
-    }
-}
-
-/**
- * From the reduxjs docs:
  * A Redux store that lets you read the state, dispatch actions and subscribe to changes.
  */
 interface Store<State> {
@@ -55,7 +38,6 @@ interface Store<State> {
     val state: State
     val updates: Observable<State>
 }
-
 
 /**
  * A wrapper to allow typing.
@@ -71,16 +53,17 @@ internal class Redux<State> {
      * and subscribe to changes.
      */
     val createStore: (Reducer<State>, State, StoreEnhancer<State>?) -> Store<State>
+        @SuppressLint("CheckResult")
         get() = { reducer, initialState, enhancer ->
             var currentState = initialState
             val actions = BehaviorSubject.create<Action>()
             val updates = BehaviorSubject.create<State>()
 
             actions.scan(initialState, reducer)
-                    .subscribe(
-                            { state -> updates.onNext(state) },
-                            { error -> updates.onError(error) }
-                    )
+                .subscribe(
+                    { state -> updates.onNext(state) },
+                    { error -> updates.onError(error) }
+                )
 
             when {
                 enhancer != null -> enhancer({ r, s -> createStore(r, s, null) })(reducer, initialState)
@@ -120,9 +103,9 @@ internal class Redux<State> {
                     }
 
                     val chain = middlewares
-                            .map { middleware -> middleware(middlewareAPI) }
-                            .toMutableList()
-                            .apply { add(store.dispatch) }
+                        .map { middleware -> middleware(middlewareAPI) }
+                        .toMutableList()
+                        .apply { add(store.dispatch) }
 
                     dispatch = chain.reduceRight { composed, f -> f.compose(composed) }
 
@@ -140,18 +123,6 @@ internal class Redux<State> {
 
 
 /**
- * See Redux.createStore()
- */
-fun <State> createStore(reducer: Reducer<State>, initialState: State, vararg middlewares: Middleware<State>): Store<State> =
-        with(Redux<State>()) { createStore(reducer, initialState, applyMiddleware(middlewares.asList())) }
-
-/**
- * See Redux.createStore()
- */
-fun <State> createStore(reducer: Reducer<State>, initialState: State, enhancer: StoreEnhancer<State>? = null): Store<State> =
-        with(Redux<State>()) { createStore(reducer, initialState, enhancer) }
-
-/**
  * Borrowed from https://github.com/MarioAriasC/funKTionale
  */
-fun <IP, R, P1> ((IP) -> R).compose(f: (P1) -> IP): (P1) -> R = { p1: P1 -> this(f(p1)) }
+private fun <IP, R, P1> ((IP) -> R).compose(f: (P1) -> IP): (P1) -> R = { p1: P1 -> this(f(p1)) }

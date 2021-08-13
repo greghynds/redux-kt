@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.allsouls.redux.Store
-import com.allsouls.redux.utils.createStore
+import com.allsouls.redux.createStore
 import com.allsouls.reduxsample.R
 import kotlinx.android.synthetic.main.activity_sample.*
 

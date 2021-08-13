@@ -1,13 +1,23 @@
-package com.allsouls.redux.utils
+package com.allsouls.redux
 
+import android.arch.lifecycle.Lifecycle.State.DESTROYED
+import android.arch.lifecycle.Lifecycle.State.STARTED
 import android.support.v7.app.AppCompatActivity
-import com.allsouls.redux.Action
-import com.allsouls.redux.Middleware
-import com.allsouls.redux.Reducer
-import com.allsouls.redux.Store
-import com.allsouls.redux.utils.RxActivity.Companion.ON_DESTROY
-import com.allsouls.redux.utils.RxActivity.Companion.ON_START
 import io.reactivex.Observable
+
+/**
+ * See Redux.createStore()
+ */
+fun <State> createStore(
+    reducer: Reducer<State>,
+    initialState: State,
+    vararg middlewares: Middleware<State>
+): Store<State> {
+    return with(Redux<State>()) {
+        createStore(reducer, initialState, applyMiddleware(middlewares.asList()))
+    }
+}
+
 
 /**
  * Creates a store scoped to the Activity lifecycle.
@@ -21,12 +31,12 @@ fun <S> AppCompatActivity.createStore(
     vararg middlewares: Middleware<S>
 ): Store<S> {
     val store = com.allsouls.redux.createStore(reducer, initialState, *middlewares)
-    val updates = with(RxActivity.lifecycle(this)) {
-        filter { lifecycleEvent -> lifecycleEvent == ON_START }
-            .takeUntil(filter { lifecycleEvent -> lifecycleEvent == ON_DESTROY })
-            .concatMap { store.updates }
-            .share()
-    }
+    val updates = store.updates
+        .filter {
+            with(lifecycle) {
+                currentState.isAtLeast(STARTED) && currentState != DESTROYED
+            }
+        }.share()
 
     return object : Store<S> {
         override val dispatch: (Action) -> Action = store.dispatch
