@@ -1,4 +1,4 @@
-package com.allsouls.redux
+package xyz.gwh.redux
 
 import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.lifecycle.Lifecycle.State.STARTED
@@ -30,7 +30,7 @@ fun <S> AppCompatActivity.createStore(
     initialState: S,
     vararg middlewares: Middleware<S>
 ): Store<S> {
-    val store = com.allsouls.redux.createStore(reducer, initialState, *middlewares)
+    val store = xyz.gwh.redux.createStore(reducer, initialState, *middlewares)
     val updates = store.updates
         .filter {
             with(lifecycle) {

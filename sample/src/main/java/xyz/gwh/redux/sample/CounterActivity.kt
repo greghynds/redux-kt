@@ -1,12 +1,10 @@
-package com.allsouls.reduxsample.counter
+package xyz.gwh.redux.sample
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.allsouls.redux.Store
-import com.allsouls.redux.createStore
-import com.allsouls.reduxsample.R
 import kotlinx.android.synthetic.main.activity_sample.*
+import xyz.gwh.redux.*
 
 class CounterActivity : AppCompatActivity() {
 

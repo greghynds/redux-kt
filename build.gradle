@@ -8,20 +8,19 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:$androidJunit5Version"
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 

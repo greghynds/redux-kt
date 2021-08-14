@@ -1,6 +1,4 @@
-package com.allsouls.reduxsample.counter
-
-import com.allsouls.redux.Action
+package xyz.gwh.redux
 
 const val INCREMENT = "INCREMENT"
 fun createIncrementAction() = Action(INCREMENT)

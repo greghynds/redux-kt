@@ -1,4 +1,4 @@
-package com.allsouls.redux
+package xyz.gwh.redux
 
 import android.annotation.SuppressLint
 import io.reactivex.Observable

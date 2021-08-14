@@ -1,4 +1,4 @@
-package com.allsouls.redux
+package xyz.gwh.redux
 
 /**
  * From the reduxjs docs:

@@ -1,7 +1,7 @@
-package com.allsouls.reduxsample.counter
+package xyz.gwh.redux.sample
 
 import android.util.Log
-import com.allsouls.redux.Middleware
+import xyz.gwh.redux.Middleware
 
 val logging: Middleware<Int> = { _ ->
     { action ->
