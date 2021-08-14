@@ -1,8 +1,8 @@
 package com.allsouls.redux
 
-import android.arch.lifecycle.Lifecycle.State.DESTROYED
-import android.arch.lifecycle.Lifecycle.State.STARTED
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle.State.DESTROYED
+import androidx.lifecycle.Lifecycle.State.STARTED
+import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
 
 /**
