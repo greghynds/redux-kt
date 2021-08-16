@@ -1,8 +1,8 @@
-package xyz.gwh.redux.sample
+package com.github.greghynds.redux.sample
 
 import junit.framework.Assert.assertEquals
 import org.junit.Test
-import xyz.gwh.redux.Action
+import com.github.greghynds.redux.Action
 
 class ActionsTest {
 

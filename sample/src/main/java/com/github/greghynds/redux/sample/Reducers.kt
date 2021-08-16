@@ -1,6 +1,6 @@
-package xyz.gwh.redux.sample
+package com.github.greghynds.redux.sample
 
-import xyz.gwh.redux.Reducer
+import com.github.greghynds.redux.Reducer
 import kotlin.math.max
 
 val counterReducer: Reducer<Int> = { state, action ->

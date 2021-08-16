@@ -1,7 +1,7 @@
-package xyz.gwh.redux.sample
+package com.github.greghynds.redux.sample
 
 import android.util.Log
-import xyz.gwh.redux.Middleware
+import com.github.greghynds.redux.Middleware
 
 val logging: Middleware<Int> = { _ ->
     { action -> action.also { Log.d("Logger", "Dispatching action: $action") } }

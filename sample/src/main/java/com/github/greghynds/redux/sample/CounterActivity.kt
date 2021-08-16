@@ -1,10 +1,11 @@
-package xyz.gwh.redux.sample
+package com.github.greghynds.redux.sample
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.github.greghynds.redux.Store
+import com.github.greghynds.redux.createStore
 import kotlinx.android.synthetic.main.activity_sample.*
-import xyz.gwh.redux.*
 
 class CounterActivity : AppCompatActivity() {
 

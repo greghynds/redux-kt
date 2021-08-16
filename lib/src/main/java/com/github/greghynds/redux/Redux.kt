@@ -1,4 +1,4 @@
-package xyz.gwh.redux
+package com.github.greghynds.redux
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -171,7 +171,7 @@ fun <S> AppCompatActivity.createStore(
     initialState: S,
     vararg middlewares: Middleware<S>
 ): Store<S> {
-    val store = xyz.gwh.redux.createStore(reducer, initialState, *middlewares)
+    val store = com.github.greghynds.redux.createStore(reducer, initialState, *middlewares)
     val updates = store.updates
         .filter { _: S -> lifecycle.currentState != Lifecycle.State.DESTROYED }
         .share()

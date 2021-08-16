@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "xyz.gwh.redux.sample"
+        applicationId "com.github.greghynds.redux.sample"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
