@@ -1,8 +1,5 @@
 package xyz.gwh.redux.sample
 
-import xyz.gwh.redux.DECREMENT
-import xyz.gwh.redux.INCREMENT
-import xyz.gwh.redux.RESET
 import xyz.gwh.redux.Reducer
 import kotlin.math.max
 

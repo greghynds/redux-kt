@@ -1,6 +1,8 @@
 package xyz.gwh.redux
 
 import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -37,6 +39,24 @@ interface Store<State> {
     val dispatch: (Action) -> Action
     val state: State
     val updates: Observable<State>
+}
+
+/**
+ * From the reduxjs docs:
+ * Actions are payloads of information that send data from your application to your store.
+ *
+ * Based on Flux Standard Action - https://github.com/redux-utilities/flux-standard-action
+ */
+data class Action(
+    val type: String = "",
+    val payload: Any? = null,
+    val error: Boolean = false
+) {
+    fun isOfType(vararg type: String): Boolean = type.contains(this.type)
+
+    companion object {
+        val EMPTY = Action("NONE")
+    }
 }
 
 /**
@@ -121,6 +141,47 @@ internal class Redux<State> {
         }
 }
 
+/**
+ * Helper function for selecting a slice of global state.
+ */
+fun <State, Slice> Store<State>.select(block: (State) -> Slice): Observable<Slice> {
+    return updates.map { state: State -> block(state) }
+}
+
+/**
+ * See Redux.createStore()
+ */
+fun <State> createStore(
+    reducer: Reducer<State>,
+    initialState: State,
+    vararg middlewares: Middleware<State>
+): Store<State> {
+    return with(Redux<State>()) {
+        createStore(reducer, initialState, applyMiddleware(middlewares.asList()))
+    }
+}
+
+/**
+ * Creates a store scoped to the Activity lifecycle.
+ *
+ * The store will not emit updates after the Activity has been destroyed.
+ */
+fun <S> AppCompatActivity.createStore(
+    reducer: Reducer<S>,
+    initialState: S,
+    vararg middlewares: Middleware<S>
+): Store<S> {
+    val store = xyz.gwh.redux.createStore(reducer, initialState, *middlewares)
+    val updates = store.updates
+        .filter { _: S -> lifecycle.currentState != Lifecycle.State.DESTROYED }
+        .share()
+
+    return object : Store<S> {
+        override val dispatch: (Action) -> Action = store.dispatch
+        override val state: S get() = store.state
+        override val updates: Observable<S> get() = updates
+    }
+}
 
 /**
  * Borrowed from https://github.com/MarioAriasC/funKTionale

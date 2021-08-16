@@ -1,4 +1,6 @@
-package xyz.gwh.redux
+package xyz.gwh.redux.sample
+
+import xyz.gwh.redux.Action
 
 const val INCREMENT = "INCREMENT"
 fun createIncrementAction() = Action(INCREMENT)
