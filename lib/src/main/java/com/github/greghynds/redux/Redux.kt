@@ -10,7 +10,7 @@ import io.reactivex.subjects.BehaviorSubject
  * From the reduxjs docs:
  * Reducers specify how the application's state changes in response to actions sent to the store.
  */
-typealias Reducer<State> = (State, Action) -> State
+typealias Reducer<State> = (State, Any) -> State
 
 /**
  * From the reduxjs docs:
@@ -28,7 +28,7 @@ typealias StoreEnhancer<State> = (next: StoreCreator<State>) -> StoreCreator<Sta
  * From the reduxjs docs:
  * A middleware is a higher-order function that composes a dispatch function to return a new dispatch function.
  */
-typealias Middleware<State> = (Store<State>) -> ((Action) -> Action)
+typealias Middleware<State> = (Store<State>) -> ((Any) -> Any)
 
 
 /**
@@ -36,7 +36,7 @@ typealias Middleware<State> = (Store<State>) -> ((Action) -> Action)
  * A Redux store that lets you read the state, dispatch actions and subscribe to changes.
  */
 interface Store<State> {
-    val dispatch: (Action) -> Action
+    val dispatch: (Any) -> Any
     val state: State
     val updates: Observable<State>
 }
@@ -76,7 +76,7 @@ internal class Redux<State> {
         @SuppressLint("CheckResult")
         get() = { reducer, initialState, enhancer ->
             var currentState = initialState
-            val actions = BehaviorSubject.create<Action>()
+            val actions = BehaviorSubject.create<Any>()
             val updates = BehaviorSubject.create<State>()
 
             actions.scan(initialState, reducer)
@@ -89,7 +89,7 @@ internal class Redux<State> {
                 enhancer != null -> enhancer({ r, s -> createStore(r, s, null) })(reducer, initialState)
                 else -> {
                     object : Store<State> {
-                        override val dispatch: (Action) -> Action
+                        override val dispatch: (Any) -> Any
                             get() = { action ->
                                 currentState = reducer(currentState, action)
                                 actions.onNext(action)
@@ -117,7 +117,7 @@ internal class Redux<State> {
                     val store: Store<State> = next(reducer, initialState)
                     var dispatch = store.dispatch
                     val middlewareAPI = object : Store<State> {
-                        override val dispatch: (Action) -> Action get() = dispatch
+                        override val dispatch: (Any) -> Any get() = dispatch
                         override val state: State get() = store.state
                         override val updates: Observable<State> get() = store.updates
                     }
@@ -130,7 +130,7 @@ internal class Redux<State> {
                     dispatch = chain.reduceRight { composed, f -> f.compose(composed) }
 
                     object : Store<State> {
-                        override val dispatch: (Action) -> Action get() = dispatch
+                        override val dispatch: (Any) -> Any get() = dispatch
                         override val state: State get() = store.state
                         override val updates: Observable<State> get() = store.updates
                     }
@@ -177,7 +177,7 @@ fun <S> AppCompatActivity.createStore(
         .share()
 
     return object : Store<S> {
-        override val dispatch: (Action) -> Action = store.dispatch
+        override val dispatch: (Any) -> Any = store.dispatch
         override val state: S get() = store.state
         override val updates: Observable<S> get() = updates
     }

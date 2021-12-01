@@ -18,9 +18,9 @@ class CounterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sample)
 
         // bind actions
-        increment_button.setOnClickListener { store.dispatch(createIncrementAction()) }
-        decrement_button.setOnClickListener { store.dispatch(createDecrementAction()) }
-        reset_button.setOnClickListener { store.dispatch(createResetAction()) }
+        increment_button.setOnClickListener { store.dispatch(Increment()) }
+        decrement_button.setOnClickListener { store.dispatch(Decrement()) }
+        reset_button.setOnClickListener { store.dispatch(Reset()) }
 
         // subscribe to updates from the store
         store.updates.subscribe { state ->
