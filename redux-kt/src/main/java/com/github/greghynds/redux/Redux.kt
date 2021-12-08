@@ -1,8 +1,5 @@
 package com.github.greghynds.redux
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
@@ -61,7 +58,7 @@ internal class Redux<State> {
      * and subscribe to changes.
      */
     val createStore: (Reducer<State>, State, StoreEnhancer<State>?) -> Store<State>
-        @SuppressLint("CheckResult")
+        @Suppress("CheckResult")
         get() = { reducer, initialState, enhancer ->
             var currentState = initialState
             val actions = BehaviorSubject.create<Any>()
