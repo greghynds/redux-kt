@@ -1,2 +1,3 @@
 include ':sample', ':redux-kt'
 include ':fsa'
+include ':redux-android'

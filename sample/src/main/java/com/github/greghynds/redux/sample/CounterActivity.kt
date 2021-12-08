@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.greghynds.redux.Store
-import com.github.greghynds.redux.createStore
+import com.github.grehynds.redux.android.createStore
 import kotlinx.android.synthetic.main.activity_sample.*
 
 class CounterActivity : AppCompatActivity() {
