@@ -17,3 +17,5 @@ data class Action(
         val EMPTY = Action("NONE")
     }
 }
+
+fun Any.isOfType(vararg type: String): Boolean = this is Action && isOfType(*type)
