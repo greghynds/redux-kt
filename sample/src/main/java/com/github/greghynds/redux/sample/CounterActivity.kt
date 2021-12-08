@@ -23,7 +23,7 @@ class CounterActivity : AppCompatActivity() {
         reset_button.setOnClickListener { store.dispatch(createResetAction()) }
 
         // subscribe to updates from the store
-        store.updates.subscribe { state ->
+        store.subscribe { state ->
             count_text.text = getString(R.string.count_text_prefix, state)
         }
     }

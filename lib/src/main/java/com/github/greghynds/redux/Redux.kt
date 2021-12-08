@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 
 /**
@@ -39,6 +41,10 @@ interface Store<State> {
     val dispatch: (Action) -> Action
     val state: State
     val updates: Observable<State>
+
+    fun subscribe(consumer: Consumer<in State>): Disposable {
+        return updates.subscribe(consumer)
+    }
 }
 
 /**

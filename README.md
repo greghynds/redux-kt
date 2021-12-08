@@ -22,7 +22,7 @@ val counterReducer: Reducer<Int> = { state, action ->
 val store: Store<Int> by lazy { createStore(counterReducer, 0) }
 
 // subscribe to state updates
-store.updates.subscribe { state -> Log.d("ReduxKt", "State: $state")}
+store.subscribe { state -> Log.d("ReduxKt", "State: $state")}
 
 // dispatch actions
 store.dispatch(Action("INCREMENT"))
