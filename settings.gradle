@@ -1,4 +1,4 @@
-include ':sample',
-        ':redux',
+include ':redux',
         ':flux-standard-action',
-        ':android-extensions'
+        ':android-extensions',
+        ':android-sample'
