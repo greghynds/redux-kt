@@ -7,10 +7,10 @@ A Kotlin port of the [ReduxJS](https://redux.js.org/introduction/getting-started
 ```kotlin 
 // create a reducer
 val counterReducer: Reducer<Int> = { state, action ->
-    when {
-        action.isOfType("INCREMENT") -> state + 1
-        action.isOfType("DECREMENT") -> max(0, state - 1)
-        action.isOfType("RESET") -> 0
+    when (action) {
+        is Increment -> state + 1
+        is Decrement -> max(0, state - 1)
+        is Reset -> 0
         else -> state
     }
 }
@@ -19,10 +19,10 @@ val counterReducer: Reducer<Int> = { state, action ->
 val store: Store<Int> by lazy { createStore(counterReducer, 0) }
 
 // subscribe to state updates
-store.subscribe { state -> Log.d("ReduxKt", "State: $state") }
+store.subscribe { state -> println("State: $state") }
 
 // dispatch actions
-store.dispatch(Action("INCREMENT"))
+store.dispatch(Increment())
 
 ```
 
