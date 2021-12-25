@@ -20,8 +20,8 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 groupId = 'com.github.greghynds'
-                artifactId = 'redux-kt'
-                version '1.0.0'
+                artifactId = 'redux'
+                version "$libVersion"
             }
         }
     }
