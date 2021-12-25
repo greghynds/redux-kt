@@ -36,13 +36,13 @@ ReduxKt modules are available on [JitPack](https://jitpack.io). To include in yo
 dependencies {
 
     // redux store + core classes
-    implementation 'com.github.greghynds:redux-kt:store:1.0.2'
+    implementation 'com.github.greghynds:redux-kt:store:1.1.1'
     
     // an optional format for actions
-    implementation 'com.github.greghynds:redux-kt:flux-standard-action:1.0.2' 
+    implementation 'com.github.greghynds:redux-kt:flux-standard-action:1.1.1' 
     
     // utilities for using redux in Android projects
-    implementation 'com.github.greghynds:redux-kt:android-extensions:1.0.2' 
+    implementation 'com.github.greghynds:redux-kt:android-extensions:1.1.1' 
 }
 ```
 

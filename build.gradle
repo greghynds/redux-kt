@@ -2,7 +2,7 @@ buildscript {
     ext {
         kotlinVersion = '1.5.31'
         junitPlatformVersion = '1.0.1'
-        libVersion = '1.0.2'
+        libVersion = '1.1.1'
         libGroupId = 'com.github.greghynds'
     }
 
