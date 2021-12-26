@@ -1,5 +1,8 @@
 package com.github.grehynds.redux.fsa
 
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
+
 /**
  * From the reduxjs docs:
  * Actions are payloads of information that send data from your application to your store.
@@ -18,4 +21,11 @@ data class Action(
     }
 }
 
-fun Any.isOfType(vararg type: String): Boolean = this is Action && isOfType(*type)
+@ExperimentalContracts
+fun Any.isOfType(type: String): Boolean {
+    contract {
+        returns(true) implies (this@isOfType is Action)
+    }
+
+    return this is Action && isOfType(type)
+}
