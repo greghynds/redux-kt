@@ -1,8 +1,6 @@
 package com.github.greghynds.redux
 
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 
 /**
@@ -39,10 +37,27 @@ interface Store<State> {
     val state: State
     val updates: Observable<State>
 
-    fun subscribe(consumer: Consumer<in State>): Disposable {
-        return updates.subscribe(consumer)
+    fun subscribe(listener: (State) -> Unit): Subscription {
+        val disposable = updates.subscribe { state -> listener(state) }
+
+        return object : Subscription {
+            override fun unsubscribe() {
+                disposable.dispose()
+            }
+        }
+    }
+
+    interface Subscription {
+        fun unsubscribe()
+
+        companion object {
+            val NONE = object : Subscription {
+                override fun unsubscribe() { /* no op */ }
+            }
+        }
     }
 }
+
 
 /**
  * A wrapper to allow typing.
