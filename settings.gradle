@@ -1,4 +1,5 @@
 include ':store',
         ':flux-standard-action',
+        ':thunk',
         ':android-extensions',
         ':android-sample'
