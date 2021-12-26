@@ -1,6 +1,6 @@
 # ReduxKt
 
-A Kotlin port of the [ReduxJS](https://redux.js.org/introduction/getting-started#basic-example) library
+A Kotlin port of the [ReduxJS](https://redux.js.org/introduction/getting-started#basic-example) library.
 
 ## Usage
 
@@ -36,13 +36,13 @@ ReduxKt modules are available on [JitPack](https://jitpack.io). To include in yo
 dependencies {
 
     // redux store + core classes
-    implementation 'com.github.greghynds:redux-kt:store:1.1.1'
+    implementation 'com.github.greghynds.redux-kt:store:1.2.0'
     
     // an optional format for actions
-    implementation 'com.github.greghynds:redux-kt:flux-standard-action:1.1.1' 
+    implementation 'com.github.greghynds.redux-kt:flux-standard-action:1.2.0' 
     
     // utilities for using redux in Android projects
-    implementation 'com.github.greghynds:redux-kt:android-extensions:1.1.1' 
+    implementation 'com.github.greghynds.redux-kt:android-extensions:1.2.0' 
 }
 ```
 
