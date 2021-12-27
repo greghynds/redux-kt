@@ -6,12 +6,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.greghynds.redux.Store
-import com.github.grehynds.redux.android.createStore
+import com.github.greghynds.redux.applyMiddleware
+import com.github.greghynds.redux.createStore
+import com.github.grehynds.redux.android.subscribe
 
 class CounterActivity : AppCompatActivity() {
 
     // create the store with the root reducer and an initial count
-    private val store: Store<Int> by lazy { createStore(counterReducer, 0, logging) }
+    private val store: Store<Int> = createStore(counterReducer, 0, applyMiddleware(logging))
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,7 @@ class CounterActivity : AppCompatActivity() {
         val countText = findViewById<TextView>(R.id.count_text)
 
         // subscribe to updates from the store
-        store.subscribe { state ->
+        store.subscribe(lifecycle) { state ->
             countText.text = getString(R.string.count_text_prefix, state)
         }
     }

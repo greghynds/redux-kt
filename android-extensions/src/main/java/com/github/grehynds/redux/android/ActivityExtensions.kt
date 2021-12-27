@@ -1,35 +1,22 @@
 package com.github.grehynds.redux.android
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import com.github.greghynds.redux.Middleware
-import com.github.greghynds.redux.Reducer
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.github.greghynds.redux.Store
-import com.github.greghynds.redux.applyMiddleware
-import io.reactivex.Observable
 
 /**
- * Creates a store scoped to the Activity lifecycle.
- *
- * The store will not emit updates after the Activity has been destroyed.
+ * Subscribe to updates from the store, scoped to a Lifecycle.
  */
-fun <S> AppCompatActivity.createStore(
-    reducer: Reducer<S>,
-    initialState: S,
-    vararg middlewares: Middleware<S>
-): Store<S> {
-    val store = com.github.greghynds.redux.createStore(
-        reducer,
-        initialState,
-        applyMiddleware(*middlewares)
-    )
-    val updates = store.updates
-        .filter { _: S -> lifecycle.currentState != Lifecycle.State.DESTROYED }
-        .share()
+fun <State> Store<State>.subscribe(lifecycle: Lifecycle, listener: (State) -> Unit) {
+    val subscription = subscribe(listener)
 
-    return object : Store<S>() {
-        override val dispatch: (Any) -> Any = store.dispatch
-        override val state: S get() = store.state
-        override val updates: Observable<S> get() = updates
-    }
+    lifecycle.addObserver(object : LifecycleEventObserver {
+        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+            if (event == ON_DESTROY) {
+                subscription.unsubscribe()
+            }
+        }
+    })
 }
