@@ -2,12 +2,10 @@ package com.github.greghynds.redux.sample
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.greghynds.redux.Store
 import com.github.greghynds.redux.applyMiddleware
 import com.github.greghynds.redux.createStore
+import com.github.greghynds.redux.sample.databinding.CounterActivityBinding
 import com.github.grehynds.redux.android.subscribe
 
 class CounterActivity : AppCompatActivity() {
@@ -15,21 +13,22 @@ class CounterActivity : AppCompatActivity() {
     // create the store with the root reducer and an initial count
     private val store = createStore(counterReducer, 0, applyMiddleware(logging))
 
+    private lateinit var binding: CounterActivityBinding
+
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
+        binding = CounterActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // bind actions
-        findViewById<Button>(R.id.increment_button).setOnClickListener { store.dispatch(Increment()) }
-        findViewById<Button>(R.id.decrement_button).setOnClickListener { store.dispatch(Decrement()) }
-        findViewById<Button>(R.id.reset_button).setOnClickListener { store.dispatch(Reset()) }
-
-        val countText = findViewById<TextView>(R.id.count_text)
+        binding.incrementButton.setOnClickListener { store.dispatch(Increment()) }
+        binding.decrementButton.setOnClickListener { store.dispatch(Decrement()) }
+        binding.resetButton.setOnClickListener { store.dispatch(Reset()) }
 
         // subscribe to updates from the store
         store.subscribe(lifecycle) { state ->
-            countText.text = getString(R.string.count_text_prefix, state)
+            binding.countText.text = getString(R.string.count_text_prefix, state)
         }
     }
 }
