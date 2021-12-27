@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import com.github.greghynds.redux.Middleware
 import com.github.greghynds.redux.Reducer
 import com.github.greghynds.redux.Store
+import com.github.greghynds.redux.applyMiddleware
 import io.reactivex.Observable
 
 /**
@@ -17,12 +18,16 @@ fun <S> AppCompatActivity.createStore(
     initialState: S,
     vararg middlewares: Middleware<S>
 ): Store<S> {
-    val store = com.github.greghynds.redux.createStore(reducer, initialState, *middlewares)
+    val store = com.github.greghynds.redux.createStore(
+        reducer,
+        initialState,
+        applyMiddleware(*middlewares)
+    )
     val updates = store.updates
         .filter { _: S -> lifecycle.currentState != Lifecycle.State.DESTROYED }
         .share()
 
-    return object : Store<S> {
+    return object : Store<S>() {
         override val dispatch: (Any) -> Any = store.dispatch
         override val state: S get() = store.state
         override val updates: Observable<S> get() = updates
