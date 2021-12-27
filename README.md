@@ -4,7 +4,7 @@ A Kotlin port of the [reduxjs](https://redux.js.org/introduction/getting-started
 
 ## Usage
 
-```kotlin 
+```kotlin
 // create a reducer
 val counterReducer: Reducer<Int> = { state, action ->
     when (action) {
@@ -16,14 +16,13 @@ val counterReducer: Reducer<Int> = { state, action ->
 }
 
 // create a store
-val store: Store<Int> by lazy { createStore(counterReducer, 0) }
+val store = createStore(counterReducer, 0)
 
 // subscribe to state updates
 store.subscribe { state -> println("State: $state") }
 
 // dispatch actions
 store.dispatch(Increment())
-
 ```
 
 ## Android Sample

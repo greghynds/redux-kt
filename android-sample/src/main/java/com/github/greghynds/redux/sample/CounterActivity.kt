@@ -13,7 +13,7 @@ import com.github.grehynds.redux.android.subscribe
 class CounterActivity : AppCompatActivity() {
 
     // create the store with the root reducer and an initial count
-    private val store: Store<Int> = createStore(counterReducer, 0, applyMiddleware(logging))
+    private val store = createStore(counterReducer, 0, applyMiddleware(logging))
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
